@@ -6,7 +6,7 @@ import { map, scan, switchMap } from 'rxjs/operators';
   selector: 'let1-container',
   template: `
     <h1>Stop rendering if directive is out of the viewport</h1>
-    rerenders: {{ rerenders() }}<br />
+    re-renders: {{ rerenders() }}<br />
     <button [unpatch] (click)="incrementTrigger.next()">
       count up
     </button>
