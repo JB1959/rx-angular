@@ -1,0 +1,1 @@
+{"version":3,"file":"index.js","sourceRoot":"ng://@rx-angular/template/","sources":["lib/render-strategies/index.ts"],"names":[],"mappings":"AAAA,cAAc,QAAQ,CAAC;AACvB,cAAc,UAAU,CAAC;AACzB,cAAc,cAAc,CAAC","sourcesContent":["export * from './rxjs';\r\nexport * from './static';\r\nexport * from './strategies';\r\n"]}

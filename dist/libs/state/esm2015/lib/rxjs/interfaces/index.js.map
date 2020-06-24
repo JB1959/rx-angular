@@ -1,0 +1,1 @@
+{"version":3,"file":"index.js","sourceRoot":"ng://@rx-angular/state/","sources":["lib/rxjs/interfaces/index.ts"],"names":[],"mappings":"","sourcesContent":["export { CompareFn } from './compare-fn';\r\nexport { KeyCompareMap } from './key-compare-map';\r\n"]}

@@ -1,0 +1,1 @@
+{"version":3,"file":"index.js","sourceRoot":"ng://@rx-angular/template/","sources":["lib/core/index.ts"],"names":[],"mappings":"AAAA,cAAc,kBAAkB,CAAC;AACjC,cAAc,gBAAgB,CAAC;AAC/B,cAAc,SAAS,CAAC","sourcesContent":["export * from './rxjs/operators';\nexport * from './render-aware';\nexport * from './utils';\n"]}

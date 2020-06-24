@@ -1,0 +1,1 @@
+{"version":3,"file":"index.js","sourceRoot":"ng://@rx-angular/template/","sources":["lib/render-strategies/static/index.ts"],"names":[],"mappings":"AAAA,cAAc,iCAAiC,CAAC;AAChD,cAAc,mBAAmB,CAAC;AAClC,cAAc,mBAAmB,CAAC","sourcesContent":["export * from './static-schedule-and-coalesced';\r\nexport * from './static-coalesce';\r\nexport * from './static-schedule';\r\n"]}

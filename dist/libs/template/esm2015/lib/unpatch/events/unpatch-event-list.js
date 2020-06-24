@@ -1,0 +1,26 @@
+export const zonePatchedEvents = [
+    'scroll',
+    'mousedown',
+    'mouseenter',
+    'mouseleave',
+    'mousemove',
+    'mouseout',
+    'mouseover',
+    'mouseup',
+    'load',
+    'pointerup',
+    'change',
+    'blur',
+    'focus',
+    'click',
+    'contextmenu',
+    'drag',
+    'dragend',
+    'dragenter',
+    'dragleave',
+    'dragover',
+    'dragstart',
+    'drop',
+    'input'
+];
+//# sourceMappingURL=unpatch-event-list.js.map

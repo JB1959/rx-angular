@@ -1,0 +1,1 @@
+{"version":3,"file":"index.js","sourceRoot":"ng://@rx-angular/template/","sources":["lib/render-strategies/strategies/index.ts"],"names":[],"mappings":"AAAA,OAAO,EAAE,aAAa,EAAE,MAAM,kBAAkB,CAAC","sourcesContent":["export { getStrategies } from './strategies-map';\r\n"]}

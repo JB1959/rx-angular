@@ -1,0 +1,26 @@
+/**
+ * Native Strategy
+ * @description
+ *
+ * This strategy mirrors Angular's built-in `async` pipe.
+ * This means for every emitted value `ChangeDetectorRef#markForCheck` is called.
+ *
+ * | Name        | ZoneLess VE/I | Render Method VE/I  | Coalescing VE/I  |
+ * |-------------| --------------| ------------ ------ | ---------------- |
+ * | `native`    | ❌/❌         | mFC / mFC           | ❌               |
+ *
+ * @param config { RenderStrategyFactoryConfig } - The values this strategy needs to get calculated.
+ * @return {RenderStrategy<T>} - The calculated strategy
+ *
+ */
+export function createNativeStrategy(config) {
+    return {
+        name: 'native',
+        renderMethod: config.cdRef.markForCheck,
+        behavior: function (o) { return o; },
+        scheduleCD: function () {
+            config.cdRef.markForCheck();
+        }
+    };
+}
+//# sourceMappingURL=native.strategy.js.map

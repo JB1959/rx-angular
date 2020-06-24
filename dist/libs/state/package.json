@@ -1,0 +1,55 @@
+{
+  "name": "@rx-angular/state",
+  "version": "1.2.2",
+  "description": "RxState is a light-weight, flexible, strongly typed and tested tool dedicated to reduce the complexity of managing component state in angular",
+  "main": "bundles/rx-angular-state.umd.js",
+  "publishConfig": {
+    "access": "public"
+  },
+  "engines": {
+    "node": ">=10.12.0",
+    "npm": ">=5.3.0",
+    "yarn": ">=1.9.2"
+  },
+  "keywords": [
+    "angular",
+    "rxjs",
+    "state",
+    "ephemeral state",
+    "component state",
+    "state management",
+    "performance",
+    "state",
+    "reactive state"
+  ],
+  "author": "Michael Hladky <michael@hladky.at>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/BioPhoton/rx-angular.git"
+  },
+  "peerDependencies": {
+    "@angular/core": ">8.0.0",
+    "rxjs": "^6.5.5",
+    "tslib": "^1.10.0"
+  },
+  "module": "fesm5/rx-angular-state.js",
+  "es2015_ivy_ngcc": "__ivy_ngcc__/fesm2015/rx-angular-state.js",
+  "es2015": "fesm2015/rx-angular-state.js",
+  "esm5": "esm5/rx-angular-state.js",
+  "esm2015": "esm2015/rx-angular-state.js",
+  "fesm5": "fesm5/rx-angular-state.js",
+  "fesm2015_ivy_ngcc": "__ivy_ngcc__/fesm2015/rx-angular-state.js",
+  "fesm2015": "fesm2015/rx-angular-state.js",
+  "typings": "rx-angular-state.d.ts",
+  "metadata": "rx-angular-state.metadata.json",
+  "sideEffects": false,
+  "__processed_by_ivy_ngcc__": {
+    "es2015": "9.1.9",
+    "fesm2015": "9.1.9",
+    "typings": "9.1.9"
+  },
+  "scripts": {
+    "prepublishOnly": "node --eval \"console.error('ERROR: Trying to publish a package that has been compiled by NGCC. This is not allowed.\\nPlease delete and rebuild the package, without compiling with NGCC, before attempting to publish.\\nNote that NGCC may have been run by importing this package into another project that is being built with Ivy enabled.\\n')\" && exit 1"
+  }
+}

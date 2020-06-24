@@ -1,0 +1,45 @@
+{
+  "name": "@rx-angular/template",
+  "version": "1.0.0-beta.0",
+  "description": "**Fully** Reactive Component Template Rendering in Angular. @rx-angular/template aims to be a reflection of Angular's built in renderings just reactive.",
+  "main": "bundles/rx-angular-template.umd.js",
+  "publishConfig": {
+    "access": "public"
+  },
+  "engines": {
+    "node": ">=10.12.0",
+    "npm": ">=5.3.0",
+    "yarn": ">=1.9.2"
+  },
+  "keywords": [
+    "angular",
+    "rxjs",
+    "performance",
+    "rendering",
+    "template",
+    "scheduling",
+    "coalescing"
+  ],
+  "author": "Michael Hladky <michael@hladky.at>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/BioPhoton/rx-angular.git"
+  },
+  "peerDependencies": {
+    "@angular/core": ">8.0.0",
+    "rxjs": "^6.5.5",
+    "tslib": "^1.10.0"
+  },
+  "module": "fesm5/rx-angular-template.js",
+  "es2015": "fesm2015/rx-angular-template.js",
+  "esm5": "esm5/rx-angular-template.js",
+  "esm2015": "esm2015/rx-angular-template.js",
+  "fesm5": "fesm5/rx-angular-template.js",
+  "fesm2015": "fesm2015/rx-angular-template.js",
+  "typings": "rx-angular-template.d.ts",
+  "sideEffects": false,
+  "scripts": {
+    "prepublishOnly": "node --eval \"console.error('ERROR: Trying to publish a package that has been compiled by Ivy. This is not allowed.\\nPlease delete and rebuild the package, without compiling with Ivy, before attempting to publish.\\n')\" && exit 1"
+  }
+}
