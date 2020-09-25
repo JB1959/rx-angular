@@ -1,23 +1,23 @@
 import {
-  EMPTY,
-  NextObserver,
+  MonoTypeOperatorFunction,
   Observable,
   of,
   ReplaySubject,
   Subscribable,
-  Subscription
+  Subscription,
+  Subscriber,
 } from 'rxjs';
 import {
-  catchError,
-  combineLatest,
   distinctUntilChanged,
   filter,
   map,
+  shareReplay,
   switchMap,
-  tap
+  tap,
+  withLatestFrom,
 } from 'rxjs/operators';
 import { RenderStrategy, StrategySelection } from './interfaces';
-import { nameToStrategy } from './nameToStrategy';
+import { RxTemplateObserver } from '../model';
 
 export interface RenderAware<U> extends Subscribable<U> {
   nextPotentialObservable: (value: any) => void;
@@ -36,20 +36,28 @@ export interface RenderAware<U> extends Subscribable<U> {
  */
 export function createRenderAware<U>(cfg: {
   strategies: StrategySelection;
-  resetObserver: NextObserver<void>;
-  updateObserver: NextObserver<U>;
+  templateObserver: RxTemplateObserver<U>;
 }): RenderAware<U | undefined | null> {
   const strategyName$ = new ReplaySubject<string | Observable<string>>(1);
-  let strategy: RenderStrategy;
+  let currentStrategy: RenderStrategy;
   const strategy$: Observable<RenderStrategy> = strategyName$.pipe(
     distinctUntilChanged(),
-    switchMap(stringOrObservable =>
+    switchMap((stringOrObservable) =>
       typeof stringOrObservable === 'string'
         ? of(stringOrObservable)
         : stringOrObservable
     ),
-    nameToStrategy(cfg.strategies),
-    tap(s => (strategy = s))
+    map((strategy: string): RenderStrategy => {
+        const s = cfg.strategies[strategy];
+        if (!!s) {
+          return s;
+        }
+        throw new Error(`Strategy ${strategy} does not exist.`);
+      }
+    ),
+    tap((s) => (currentStrategy = s)),
+    // do not repeat the steps before for each subscriber
+    shareReplay({ bufferSize: 1, refCount: true })
   );
 
   const observablesFromTemplate$ = new ReplaySubject<Observable<U>>(1);
@@ -60,12 +68,12 @@ export function createRenderAware<U>(cfg: {
 
   const renderingEffect$ = valuesFromTemplate$.pipe(
     // handle null | undefined assignment and new Observable reset
-    map(observable$ => {
+    map((observable$) => {
       if (observable$ === null) {
         return of(null);
       }
       if (!firstTemplateObservableChange) {
-        cfg.resetObserver.next();
+        cfg.templateObserver.suspense();
         if (observable$ === undefined) {
           return of(undefined);
         }
@@ -74,15 +82,19 @@ export function createRenderAware<U>(cfg: {
       return observable$;
     }),
     // forward only observable values
-    filter(o$ => o$ !== undefined),
-    combineLatest(strategy$),
-    switchMap(([o$, s]) =>
-      o$.pipe(distinctUntilChanged(), tap(cfg.updateObserver), s.rxScheduleCD)
-    ),
-    catchError(e => {
-      console.error(e);
-      return EMPTY;
-    })
+    filter((o$) => o$ !== undefined),
+    distinctUntilChanged(),
+    switchMap((o$) =>
+      o$
+        // Added behavior will get applied to the observable in `renderWithLatestStrategy`
+        .pipe(
+          // Forward only distinct values
+          distinctUntilChanged(),
+          // Update completion, error and next
+          tap(cfg.templateObserver),
+          renderWithLatestStrategy(strategy$)
+        )
+    )
   );
 
   return {
@@ -94,9 +106,38 @@ export function createRenderAware<U>(cfg: {
     },
     activeStrategy$: strategy$,
     subscribe(): Subscription {
-      return new Subscription()
-        .add(strategy$.subscribe())
-        .add(renderingEffect$.subscribe());
-    }
+      return new Subscription().add(renderingEffect$.subscribe());
+    },
   };
+}
+
+function renderWithLatestStrategy<T>(
+  strategyChanges$: Observable<RenderStrategy>
+): MonoTypeOperatorFunction<T> {
+  return (o$) => {
+    return o$.pipe(
+      handleErrorAndComplete(),
+      withLatestFrom(strategyChanges$),
+      // always use latest strategy on value change
+      switchMap(([renderValue, strategy]) =>
+        of(renderValue).pipe(strategy.rxScheduleCD)
+      )
+    );
+  };
+
+  function handleErrorAndComplete<U>(): MonoTypeOperatorFunction<U> {
+    return (o$: Observable<U>) =>
+      new Observable((subscriber: Subscriber<U>) => {
+        const subscription = o$.subscribe({
+          next: (val) => subscriber.next(val),
+          // make "error" and "complete" notifications comply with `rxScheduleCD`
+          error: (err) => {
+            console.error(err);
+            subscriber.next();
+          },
+          complete: () => subscriber.next(),
+        });
+        return () => subscription.unsubscribe();
+      });
+  }
 }

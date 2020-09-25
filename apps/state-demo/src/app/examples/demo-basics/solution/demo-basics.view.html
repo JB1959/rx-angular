@@ -1,12 +1,12 @@
 <h3>Final Example</h3>
-<small>re-renders: {{rerenders()}}</small><br />
+<br />
 <mat-expansion-panel
   class="list"
   *ngIf="vm.baseModel$ | async as bm"
   (expandedChange)="vm.listExpandedChanges.next($event)"
   [expanded]="bm.listExpanded"
 >
-  <mat-expansion-panel-header style="position: relative">
+  <mat-expansion-panel-header style="position: relative;">
     <mat-progress-bar *ngIf="bm.isPending" [mode]="'query'"></mat-progress-bar>
     <mat-panel-title>User Name</mat-panel-title>
     <mat-panel-description>

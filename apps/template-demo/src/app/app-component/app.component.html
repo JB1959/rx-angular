@@ -1,45 +1,10 @@
-<mat-sidenav-container class="sidenav-container">
-  <mat-sidenav
-    #drawer
-    class="sidenav"
-    fixedInViewport
-    [attr.role]="(vm.isHandset$ | async) ? 'dialog' : 'navigation'"
-    [mode]="(vm.isHandset$ | async) ? 'over' : 'side'"
-    [opened]="(vm.isHandset$ | async) === false"
-  >
-    <mat-toolbar>Menu</mat-toolbar>
-    <mat-nav-list>
-      <h3 matSubheader>Tutorials</h3>
-      <a mat-list-item [routerLink]="['unpatch']">unpatch</a>
-      <a mat-list-item [routerLink]="['scheduling']">Scheduling</a>
-      <a mat-list-item [routerLink]="['coalescing/experiments-profiling']"
-        >Coalescing Profiling</a
-      >
-      <a mat-list-item [routerLink]="['coalescing/real-life-1']"
-        >Coalescing Imperative</a
-      >
-      <a mat-list-item [routerLink]="['scheduling']">Scheduling</a>
-      <a mat-list-item [routerLink]="['prioritize-in-viewport']"
-        >Viewport Prio</a
-      >
-      <a mat-list-item [routerLink]="['tree-prio']">ComponentTree Prio</a>
-    </mat-nav-list>
-  </mat-sidenav>
-  <mat-sidenav-content>
-    <mat-toolbar color="primary">
-      <button
-        type="button"
-        aria-label="Toggle sidenav"
-        mat-icon-button
-        (click)="drawer.toggle()"
-        *ngIf="vm.isHandset$ | async"
-      >
-        <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
-      </button>
-      <span>RxAngular Template</span>
-    </mat-toolbar>
-    <div class="container">
-      <router-outlet></router-outlet>
-    </div>
-  </mat-sidenav-content>
-</mat-sidenav-container>
+<app-shell>
+  <app-side-nav [navItems]="menuItems"> </app-side-nav>
+  <ng-container appShellSidenavTitle>
+    Template Demo
+  </ng-container>
+  <ng-container appShellHeaderContent>
+    <renders></renders>
+  </ng-container>
+  <router-outlet></router-outlet>
+</app-shell>

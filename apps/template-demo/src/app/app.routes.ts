@@ -3,42 +3,42 @@ import { Routes } from '@angular/router';
 export const ROUTES: Routes = [
   {
     path: '',
-    redirectTo: 'coalescing',
+    redirectTo: 'rx-let',
     pathMatch: 'full'
+  },
+  {
+    path: 'strategies',
+    loadChildren: () =>
+      import('./examples/strategies/strategies.module').then(
+        m => m.StrategiesDemoModule
+      )
+  },
+  {
+    path: 'rx-let',
+    loadChildren: () =>
+      import('./examples/rx-let/rx-let-demo.module').then(
+        m => m.RxLetDemoModule
+      )
+  },
+  {
+    path: 'push',
+    loadChildren: () =>
+      import('./examples/push/push.module').then(
+        m => m.PushDemoModule
+      )
   },
   {
     path: 'unpatch',
     loadChildren: () =>
-      import('./examples/unpatch/comparison-unpatch.module').then(
-        m => m.ComparisonUnpatchModule
+      import('./examples/unpatch/unpatch.module').then(
+        m => m.UnpatchModule
       )
   },
   {
-    path: 'scheduling',
+    path: 'view-port-prio',
     loadChildren: () =>
-      import('./examples/scheduling/scheduling.module').then(
-        m => m.SchedulingModule
-      )
-  },
-  {
-    path: 'coalescing',
-    loadChildren: () =>
-      import('./examples/coalescing/coalescing.module').then(
-        m => m.CoalescingModule
-      )
-  },
-  {
-    path: 'prioritize-in-viewport',
-    loadChildren: () =>
-      import(
-        './examples/prioritize-in-viewport/prioritize-in-viewport.module'
-      ).then(m => m.PrioritizeInViewportModule)
-  },
-  {
-    path: 'tree-prio',
-    loadChildren: () =>
-      import('./examples/component-tree-prio/component-tree-prio.module').then(
-        m => m.ComponentTreePrioModule
+      import('./examples/viewport-prio/viewport-prio-demo.module').then(
+        m => m.ViewportPrioModule
       )
   }
 ];

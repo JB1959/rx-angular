@@ -6,11 +6,11 @@ import {
   getStrategies
 } from '../../src/lib/render-strategies';
 import { TestScheduler } from 'rxjs/testing';
-import { jestMatcher } from '@test-helpers';
+// tslint:disable-next-line:nx-enforce-module-boundaries
+import { jestMatcher, mockConsole } from '@test-helpers';
 
 import {
-  getMockNativeStrategyConfig,
-  getMockNoopStrategyConfig
+  getMockStrategyConfig
 } from '../fixtures';
 import { DEFAULT_STRATEGY_NAME } from '../../src/lib/render-strategies/strategies/strategies-map';
 import { createNativeStrategy } from '../../src/lib/render-strategies/strategies/native.strategy';
@@ -38,7 +38,10 @@ function tickFromUnPatchedPromise() {
   return from(getUnpatchedResolvedPromise());
 }
 
+
 describe('getZoneUnPatchedDurationSelector', () => {
+  beforeAll(() => mockConsole());
+
   beforeEach(restoreGlobalThis);
 
   it('should return the the native/un-patched Promise from globalThis.Promise if zone didnt patch it', () => {
@@ -75,7 +78,7 @@ describe('getZoneUnPatchedDurationSelector', () => {
 
 describe('DEFAULT_STRATEGY_NAME', () => {
   it('should be `native`', () => {
-    const strategies = getStrategies(getMockNoopStrategyConfig());
+    const strategies = getStrategies(getMockStrategyConfig());
     expect(strategies[DEFAULT_STRATEGY_NAME].name).toBe('local');
   });
 });
@@ -87,12 +90,12 @@ describe('strategies', () => {
 
   describe('createNativeStrategy', () => {
     it('should return a strategy named `native`', () => {
-      const strategy = createNativeStrategy(getMockNativeStrategyConfig());
+      const strategy = createNativeStrategy(getMockStrategyConfig());
       expect(strategy.name).toBe('native');
     });
 
     it('should call the renderMethod `ChangeDetectorRef#markForCheck`', () => {
-      const cfg = getMockNativeStrategyConfig();
+      const cfg = getMockStrategyConfig();
       const strategy = createNativeStrategy(cfg);
       strategy.detectChanges();
       expect(cfg.cdRef.markForCheck).toHaveBeenCalledTimes(1);
@@ -101,7 +104,7 @@ describe('strategies', () => {
 
   describe('createNoopStrategy', () => {
     it('should return a strategy named `noop`', () => {
-      const strategy = createNoopStrategy();
+      const strategy = createNoopStrategy(getMockStrategyConfig());
       expect(strategy.name).toBe('noop');
     });
   });

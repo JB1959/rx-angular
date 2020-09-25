@@ -2,7 +2,11 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
-import { LetModule, PushModule } from '@rx-angular/template';
+import {
+  LetModule,
+  PushModule,
+  UnpatchEventsModule,
+} from '@rx-angular/template';
 
 import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
 import { InMemoryDataService } from './in-memory-data.service';
@@ -15,6 +19,7 @@ import { HeroDetailComponent } from './hero-detail/hero-detail.component';
 import { HeroesComponent } from './heroes/heroes.component';
 import { HeroSearchComponent } from './hero-search/hero-search.component';
 import { MessagesComponent } from './messages/messages.component';
+import { DebugHelperModule } from './debug-helper.module.ts/debug-helper.module';
 
 @NgModule({
   imports: [
@@ -27,10 +32,12 @@ import { MessagesComponent } from './messages/messages.component';
     // and returns simulated server responses.
     // Remove it when a real server is ready to receive requests.
     HttpClientInMemoryWebApiModule.forRoot(InMemoryDataService, {
-      dataEncapsulation: false
+      dataEncapsulation: false,
     }),
     LetModule,
-    PushModule
+    PushModule,
+    UnpatchEventsModule,
+    DebugHelperModule,
   ],
   declarations: [
     AppComponent,
@@ -38,8 +45,8 @@ import { MessagesComponent } from './messages/messages.component';
     HeroesComponent,
     HeroDetailComponent,
     MessagesComponent,
-    HeroSearchComponent
+    HeroSearchComponent,
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
 export class AppModule {}

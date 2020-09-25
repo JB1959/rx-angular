@@ -18,6 +18,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatOptionModule } from '@angular/material/core';
 import { MatSelectModule } from '@angular/material/select';
 
+
 @NgModule({
   declarations: [AppComponent, ConfigPanelComponent],
   imports: [
@@ -36,10 +37,10 @@ import { MatSelectModule } from '@angular/material/select';
     TemplateModule,
     MatInputModule,
     MatOptionModule,
-    MatSelectModule
+    MatSelectModule,
   ],
   providers: [],
   exports: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
 export class AppModule {}

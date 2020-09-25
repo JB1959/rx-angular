@@ -6,7 +6,7 @@ import { getUnpatchedResolvedPromise } from '../../core/utils';
 
 export function coalesceAndSchedule(
   work: () => void,
-  priority: SchedulingPriority,
+  priority: false | SchedulingPriority,
   scope: object = {},
   abC: AbortController = new AbortController()
 ): AbortController {
@@ -20,7 +20,7 @@ export function coalesceAndSchedule(
     abC
   );
 
-  const abortHandler = function() {
+  const abortHandler = function () {
     coalesceAbC.abort();
     abC.signal.removeEventListener('abort', abortHandler, false);
   };
